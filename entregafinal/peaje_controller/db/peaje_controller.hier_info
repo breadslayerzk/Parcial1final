@@ -1,0 +1,37 @@
+|peaje_controller
+clk => exit_barrier_reg.CLK
+clk => entry_barrier_reg.CLK
+reset => exit_barrier_reg.PRESET
+reset => entry_barrier_reg.PRESET
+front_sensor => vehicle_present.IN0
+front_sensor => exit_barrier_reg.OUTPUTSELECT
+front_sensor => vehicle_passed.IN0
+back_sensor => vehicle_passed.IN1
+back_sensor => vehicle_present.IN1
+tag_read[0] => cat_display.DATAB
+tag_read[1] => cat_display.DATAB
+tag_read[2] => ~NO_FANOUT~
+tag_read[3] => ~NO_FANOUT~
+tag_read[4] => ~NO_FANOUT~
+tag_valid => entry_green_int.IN1
+tag_valid => entry_green_int.IN1
+cat_code[0] => cat_display.DATAB
+cat_code[1] => cat_display.DATAB
+timeout => timeout_passed.IN1
+led_toggle => green_led.DATAB
+led_toggle => red_led.DATAB
+max_attempts => alarm.IN1
+max_attempts => red_led.IN1
+entry_green <= entry_green_int.DB_MAX_OUTPUT_PORT_TYPE
+entry_red <= entry_green_int.DB_MAX_OUTPUT_PORT_TYPE
+exit_green <= vehicle_passed.DB_MAX_OUTPUT_PORT_TYPE
+exit_red <= vehicle_passed.DB_MAX_OUTPUT_PORT_TYPE
+entry_barrier <= entry_barrier_reg.DB_MAX_OUTPUT_PORT_TYPE
+exit_barrier <= exit_barrier_reg.DB_MAX_OUTPUT_PORT_TYPE
+green_led <= green_led.DB_MAX_OUTPUT_PORT_TYPE
+red_led <= red_led.DB_MAX_OUTPUT_PORT_TYPE
+alarm <= alarm.DB_MAX_OUTPUT_PORT_TYPE
+cat_display[0] <= cat_display.DB_MAX_OUTPUT_PORT_TYPE
+cat_display[1] <= cat_display.DB_MAX_OUTPUT_PORT_TYPE
+
+

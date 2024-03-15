@@ -1,0 +1,81 @@
+m255
+K3
+13
+cModel Technology
+Z0 dD:\Parcial1\peaje_electronico\simulation\qsim
+vpeaje_electronico
+Z1 IlCJG5aC=8e6UolL8:?MH71
+Z2 VD;:?X9;m?Qk:ab4jE8EXF0
+Z3 dE:\Parcial1\peaje_electronico\simulation\qsim
+Z4 w1710452382
+Z5 8peaje_electronico.vo
+Z6 Fpeaje_electronico.vo
+L0 31
+Z7 OV;L;10.1d;51
+r1
+31
+Z8 !s90 -work|work|peaje_electronico.vo|
+Z9 o-work work -O0
+!i10b 1
+Z10 !s100 4E9mhbO=RgMO2Ah[XLlRH3
+!s85 0
+Z11 !s108 1710452384.025000
+Z12 !s107 peaje_electronico.vo|
+!s101 -O0
+vpeaje_electronico_vlg_check_tst
+!i10b 1
+Z13 !s100 O[Q`mA5kdm[4YeUl`5=<I2
+Z14 ImC0CGj;3m<RlkD=AOaJ?B3
+Z15 VbS6kn9YWmX:nXKe618gmQ3
+R3
+Z16 w1710452380
+Z17 8Waveform.vwf.vt
+Z18 FWaveform.vwf.vt
+L0 65
+R7
+r1
+!s85 0
+31
+Z19 !s108 1710452385.093000
+Z20 !s107 Waveform.vwf.vt|
+Z21 !s90 -work|work|Waveform.vwf.vt|
+!s101 -O0
+R9
+vpeaje_electronico_vlg_sample_tst
+!i10b 1
+Z22 !s100 90Tgf7l9IZ@AYKPSA8;1S0
+Z23 IJZOT=4QA7j32Xh6@hY;HR1
+Z24 V18>U5c0T7X2H_R3RmQ01U1
+R3
+R16
+R17
+R18
+L0 29
+R7
+r1
+!s85 0
+31
+R19
+R20
+R21
+!s101 -O0
+R9
+vpeaje_electronico_vlg_vec_tst
+!i10b 1
+!s100 bGio7153=FEH@TOEG=FK=3
+I_U@mc0Ze_e7EUV[FE;@b52
+Z25 VRf0?]L`Y1faPjd^8J5;YY1
+R3
+R16
+R17
+R18
+Z26 L0 644
+R7
+r1
+!s85 0
+31
+R19
+R20
+R21
+!s101 -O0
+R9

@@ -1,0 +1,46 @@
+|input_interface
+clk => attempt_count[0].CLK
+clk => attempt_count[1].CLK
+clk => max_attempts~reg0.CLK
+clk => tag_valid~reg0.CLK
+clk => tag_read[0]~reg0.CLK
+clk => tag_read[1]~reg0.CLK
+clk => tag_read[2]~reg0.CLK
+clk => tag_read[3]~reg0.CLK
+clk => tag_read[4]~reg0.CLK
+clk => back_sensor~reg0.CLK
+clk => front_sensor~reg0.CLK
+reset => attempt_count[0].ACLR
+reset => attempt_count[1].ACLR
+reset => max_attempts~reg0.ACLR
+reset => tag_valid~reg0.ACLR
+reset => tag_read[0]~reg0.ACLR
+reset => tag_read[1]~reg0.ACLR
+reset => tag_read[2]~reg0.ACLR
+reset => tag_read[3]~reg0.ACLR
+reset => tag_read[4]~reg0.ACLR
+reset => back_sensor~reg0.ACLR
+reset => front_sensor~reg0.ACLR
+front_sensor_raw => front_sensor~reg0.DATAIN
+back_sensor_raw => back_sensor~reg0.DATAIN
+tag_read_raw[0] => tag_read[0]~reg0.DATAIN
+tag_read_raw[0] => Equal0.IN4
+tag_read_raw[1] => tag_read[1]~reg0.DATAIN
+tag_read_raw[1] => Equal0.IN3
+tag_read_raw[2] => tag_read[2]~reg0.DATAIN
+tag_read_raw[2] => Equal0.IN2
+tag_read_raw[3] => tag_read[3]~reg0.DATAIN
+tag_read_raw[3] => Equal0.IN1
+tag_read_raw[4] => tag_read[4]~reg0.DATAIN
+tag_read_raw[4] => Equal0.IN0
+front_sensor <= front_sensor~reg0.DB_MAX_OUTPUT_PORT_TYPE
+back_sensor <= back_sensor~reg0.DB_MAX_OUTPUT_PORT_TYPE
+tag_read[0] <= tag_read[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+tag_read[1] <= tag_read[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+tag_read[2] <= tag_read[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+tag_read[3] <= tag_read[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+tag_read[4] <= tag_read[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+tag_valid <= tag_valid~reg0.DB_MAX_OUTPUT_PORT_TYPE
+max_attempts <= max_attempts~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+

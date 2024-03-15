@@ -1,0 +1,88 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity peaje_controller is
+    Port ( clk : in STD_LOGIC;
+           reset : in STD_LOGIC;
+           front_sensor : in STD_LOGIC;
+           back_sensor : in STD_LOGIC;
+           tag_read : in STD_LOGIC_VECTOR (4 downto 0);
+           tag_valid : in STD_LOGIC;
+           cat_code : in STD_LOGIC_VECTOR (1 downto 0);
+           timeout : in STD_LOGIC;
+           led_toggle : in STD_LOGIC;
+           max_attempts : in STD_LOGIC;
+           entry_green : out STD_LOGIC;
+           entry_red : out STD_LOGIC;
+           exit_green : out STD_LOGIC;
+           exit_red : out STD_LOGIC;
+           entry_barrier : out STD_LOGIC;
+           exit_barrier : out STD_LOGIC;
+           green_led : out STD_LOGIC;
+           red_led : out STD_LOGIC;
+           alarm : out STD_LOGIC;
+           cat_display : out STD_LOGIC_VECTOR (1 downto 0));
+end peaje_controller;
+
+architecture Behavioral of peaje_controller is
+
+    -- Declaración de señales internas
+    signal vehicle_present, vehicle_passed, timeout_passed : STD_LOGIC;
+    signal entry_barrier_reg, exit_barrier_reg : STD_LOGIC;
+    signal entry_green_int, exit_green_int : STD_LOGIC;
+
+begin
+
+    -- Proceso secuencial para registros
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            entry_barrier_reg <= '1';
+            exit_barrier_reg <= '1';
+        elsif rising_edge(clk) then
+            if vehicle_present = '1' and tag_valid = '1' then
+                entry_barrier_reg <= '0'; -- Baja la barrera de entrada
+            elsif vehicle_passed = '1' then
+                entry_barrier_reg <= '1'; -- Sube la barrera de entrada
+                exit_barrier_reg <= '0'; -- Baja la barrera de salida
+            elsif front_sensor = '0' then
+                exit_barrier_reg <= '1'; -- Sube la barrera de salida
+            end if;
+        end if;
+    end process;
+
+    -- Lógica combinacional
+    vehicle_present <= front_sensor and (not back_sensor);
+    vehicle_passed <= back_sensor and (not front_sensor);
+    timeout_passed <= timeout and vehicle_present;
+
+    entry_green_int <= '0' when (vehicle_present = '1' and tag_valid = '0') or timeout_passed = '1' else
+                       '1' when vehicle_present = '1' and tag_valid = '1' else
+                       '0';
+    entry_red <= not entry_green_int;
+
+    exit_green_int <= '0' when vehicle_passed = '0' else
+                      '1';
+    exit_red <= not exit_green_int;
+
+    entry_barrier <= entry_barrier_reg;
+    exit_barrier <= exit_barrier_reg;
+
+    green_led <= led_toggle when vehicle_present = '1' and tag_valid = '1' else
+                 '0';
+
+    red_led <= led_toggle when (vehicle_present = '1' and tag_valid = '0' and max_attempts = '0') or timeout_passed = '1' else
+               '0';
+
+    alarm <= '1' when vehicle_present = '1' and tag_valid = '0' and max_attempts = '1' else
+             '0';
+
+    cat_display <= cat_code when vehicle_present = '1' and tag_valid = '1' else
+                   tag_read(1 downto 0) when vehicle_present = '1' and tag_valid = '0' else
+                   "00";
+
+    -- Asignar las señales internas a las salidas
+    entry_green <= entry_green_int;
+    exit_green <= exit_green_int;
+
+end Behavioral;

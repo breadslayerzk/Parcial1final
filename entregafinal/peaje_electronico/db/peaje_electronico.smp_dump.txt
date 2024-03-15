@@ -1,0 +1,9 @@
+
+State Machine - |peaje_electronico|peaje_controller:peaje_controller_inst|state_reg
+Name state_reg.alarming state_reg.rejected state_reg.passed state_reg.checking state_reg.waiting state_reg.idle 
+state_reg.idle 0 0 0 0 0 0 
+state_reg.waiting 0 0 0 0 1 1 
+state_reg.checking 0 0 0 1 0 1 
+state_reg.passed 0 0 1 0 0 1 
+state_reg.rejected 0 1 0 0 0 1 
+state_reg.alarming 1 0 0 0 0 1 

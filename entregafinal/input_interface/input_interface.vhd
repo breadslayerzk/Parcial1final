@@ -1,0 +1,50 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL; -- Se agrega esta línea
+
+entity input_interface is
+    Port ( clk : in STD_LOGIC;
+           reset : in STD_LOGIC;
+           front_sensor_raw : in STD_LOGIC;
+           back_sensor_raw : in STD_LOGIC;
+           tag_read_raw : in STD_LOGIC_VECTOR (4 downto 0);
+           
+           front_sensor : out STD_LOGIC;
+           back_sensor : out STD_LOGIC;
+           tag_read : out STD_LOGIC_VECTOR (4 downto 0);
+           tag_valid : out STD_LOGIC;
+           max_attempts : out STD_LOGIC);
+end input_interface;
+
+architecture Behavioral of input_interface is
+    signal attempt_count : unsigned(1 downto 0);
+begin
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            front_sensor <= '0';
+            back_sensor <= '0';
+            tag_read <= (others => '0');
+            tag_valid <= '0';
+            max_attempts <= '0';
+            attempt_count <= (others => '0');
+        elsif rising_edge(clk) then
+            front_sensor <= front_sensor_raw;
+            back_sensor <= back_sensor_raw;
+            tag_read <= tag_read_raw;
+            
+            if tag_read_raw = "00000" then
+                tag_valid <= '0';
+                if attempt_count < "11" then
+                    attempt_count <= attempt_count + 1;
+                else
+                    max_attempts <= '1';
+                end if;
+            else
+                tag_valid <= '1';
+                attempt_count <= (others => '0');
+                max_attempts <= '0';
+            end if;
+        end if;
+    end process;
+end Behavioral;
