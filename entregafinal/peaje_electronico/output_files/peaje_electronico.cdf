@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP3C16F484) Path("E:/Parcial1/peaje_electronico/output_files/") File("peaje_electronico.sof") MfrSpec(OpMask(1));
+		Device PartName(EP3C16F484) Path("F:/Parcial1/entregafinal/peaje_electronico/output_files/") File("peaje_electronico.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

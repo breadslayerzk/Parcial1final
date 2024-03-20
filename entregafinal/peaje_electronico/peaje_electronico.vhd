@@ -24,7 +24,7 @@ end peaje_electronico;
 
 architecture Structural of peaje_electronico is
 
-    -- SeÃ±ales internas para interconectar los mÃ³dulos
+    -- SeÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ales internas para interconectar los mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³dulos
     signal front_sensor, back_sensor : STD_LOGIC;
     signal tag_read : STD_LOGIC_VECTOR (4 downto 0);
     signal tag_valid, max_attempts : STD_LOGIC;
@@ -35,7 +35,7 @@ architecture Structural of peaje_electronico is
     signal cat_display : STD_LOGIC_VECTOR (1 downto 0);
     signal time_display : STD_LOGIC_VECTOR (6 downto 0);
 
-    -- InstanciaciÃ³n de los mÃ³dulos
+    -- InstanciaciÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³n de los mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³dulos
     component input_interface
         Port ( clk : in STD_LOGIC;
                reset : in STD_LOGIC;
@@ -121,7 +121,7 @@ architecture Structural of peaje_electronico is
 
 begin
 
-    -- Instancias de los mÃ³dulos y conexiones de seÃ±ales
+    -- Instancias de los mÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â³dulos y conexiones de seÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â±ales
     input_interface_inst : input_interface
         Port map ( clk => clk,
                    reset => reset,
@@ -200,11 +200,12 @@ begin
 
 end Structural;
 
--- DeclaraciÃ³n de la biblioteca antes de la entidad "tag_categorizer"
+
+-- Declaración de la biblioteca antes de la entidad "tag_categorizer"
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- DefiniciÃ³n de la entidad "tag_categorizer"
+-- Definición de la entidad "tag_categorizer"
 entity tag_categorizer is
     Port ( tag_read : in STD_LOGIC_VECTOR (4 downto 0);
            tag_valid : in STD_LOGIC;
@@ -213,52 +214,64 @@ end entity tag_categorizer;
 
 architecture rtl of tag_categorizer is
 begin
-    -- LÃ³gica de la entidad "tag_categorizer"
-    -- AquÃ­ debes implementar la lÃ³gica para categorizar los tags
+    -- Lógica de la entidad "tag_categorizer"
+    process(tag_read, tag_valid)
+    begin
+        -- Asignar categoría por defecto
+        cat_code <= "00";
+
+        -- Verificar validez del tag
+        if tag_valid = '1' then
+            -- Categorizar los tags según su valor
+            case tag_read is
+                when "00000" =>
+                    cat_code <= "00"; -- Categoría 0 (por ejemplo, vehículos particulares)
+                when "00001" | "00010" | "00011" =>
+                    cat_code <= "01"; -- Categoría 1 (por ejemplo, vehículos de transporte público)
+                when "00100" | "00101" | "00110" | "00111" =>
+                    cat_code <= "10"; -- Categoría 2 (por ejemplo, vehículos de carga)
+                when others =>
+                    cat_code <= "11"; -- Categoría 3 (por ejemplo, otros tipos de vehículos)
+            end case;
+        end if;
+    end process;
 end architecture rtl;
 
--- DefiniciÃ³n de la entidad "timer"
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
 entity timer is
-    generic (
-        TIMER_MAX : natural := 50_000_000  -- Valor máximo del contador (1 segundo a 50 MHz)
-    );
-    port (
-        clk      : in  std_logic;
-        reset    : in  std_logic;
-        enable   : in  std_logic;
-        timeout  : out std_logic;
-        led_toggle : out std_logic
-    );
+    Port ( clk : in STD_LOGIC;
+           reset : in STD_LOGIC;
+           enable : in STD_LOGIC; -- SeÃ±al de habilitaciÃ³n agregada
+           timeout : out STD_LOGIC;
+           led_toggle : out STD_LOGIC);
 end entity timer;
 
 architecture rtl of timer is
+    constant CLK_FREQ : natural := 50_000_000; -- Frecuencia de reloj de entrada (50 MHz)
+    constant DIV_RATIO : natural := CLK_FREQ; -- RazÃ³n de divisiÃ³n para obtener 1 Hz
+
     signal counter : unsigned(31 downto 0) := (others => '0');
-    signal toggle_reg : std_logic := '0';
+    signal clk_out : STD_LOGIC := '0'; -- SeÃ±al interna para el reloj dividido
 begin
 
     process(clk, reset)
     begin
         if reset = '1' then
             counter <= (others => '0');
-            timeout <= '0';
-            led_toggle <= '0';
-            toggle_reg <= '0';
-        elsif rising_edge(clk) then
-            if enable = '1' then
-                if counter = TIMER_MAX - 1 then
-                    counter <= (others => '0');
-                    timeout <= '1';
-                    toggle_reg <= not toggle_reg;
-                    led_toggle <= toggle_reg;
-                else
-                    counter <= counter + 1;
-                    timeout <= '0';
-                    led_toggle <= toggle_reg;
-                end if;
+            clk_out <= '0';
+            timeout <= '0'; -- Inicializar salida timeout
+            led_toggle <= '0'; -- Inicializar salida led_toggle
+        elsif rising_edge(clk) and enable = '1' then -- Divisor habilitado por la seÃ±al enable
+            if counter = DIV_RATIO - 1 then
+                counter <= (others => '0');
+                clk_out <= not clk_out;
+                timeout <= clk_out; -- Asignar el reloj dividido a la salida timeout
+                led_toggle <= not clk_out; -- Asignar la negaciÃ³n del reloj dividido a la salida led_toggle
+            else
+                counter <= counter + 1;
             end if;
         end if;
     end process;
